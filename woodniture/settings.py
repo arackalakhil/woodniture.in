@@ -166,7 +166,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # MEDIA_ROOT = BASE_DIR / "product_images"
 # MEDIA_URL = "/media/"
-heroku config:set DISABLE_COLLECTSTATIC=1
+# heroku config:set DISABLE_COLLECTSTATIC=1
 
 
 
