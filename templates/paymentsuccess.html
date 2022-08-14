@@ -1,0 +1,229 @@
+{% extends 'user_header_footer.html' %}
+
+{% load static %}
+
+{% block headerandfooter %}
+
+
+
+
+        <!-- Page Banner Section Start -->
+        <div class="page-banner-section section bg-image" data-bg="assets/images/bg/breadcrumb.png">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+
+                        <div class="page-banner text-left">
+                            <h2>order summery</h2>
+                            <ul class="page-breadcrumb">
+                                <li><a href="index.html">Home</a></li>
+                                <li>order</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page Banner Section End -->
+        <!--Cart section start-->
+        <div class="cart-section section pt-90 pt-lg-70 pt-md-60 pt-sm-50 pt-xs-45  pb-70 pb-lg-50 pb-md-40 pb-sm-30 pb-xs-20">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12">
+                        <!-- Cart Table -->
+                    {% if not carts_item %}
+                        <h1>nothing here </h1>
+                        <h1>  </h1>
+                    {% else %} 
+                        <div class="cart-table table-responsive mb-30">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="pro-thumbnail">Image</th>
+                                        <th class="pro-title">Product</th>
+                                        <th class="pro-price">Price</th>
+                                        <th class="pro-quantity">Quantity</th>
+                                        <th class="pro-subtotal">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                              
+                                    {% for x in carts_item %}
+                                    
+                                    <tr>
+                                        <td class="pro-thumbnail"><a href="#"><img src="{{x.product.img}}" alt="Product"></a></td>
+                                        <td class="pro-title"><a href="#">{{x.product.name}}</a></td>
+                                        <td class="pro-price"><span>{{x.product.price}}</span></td>
+                                        <td class="pro-price"><span>{{x.quantity}}</span></td>
+                                        </td>
+                                        <td class="pro-subtotal"><span>{{x.sub_total}}</span></td>
+                                        
+                                            
+                                    </tr>
+                                    {% endfor %}
+                                
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                        <div class="row">
+
+                            <div class="col-lg-12 col-12 mb-5">
+                                <!-- Calculate Shipping -->
+                                <!-- <div class="calculate-shipping">
+                                    <h4>Calculate Shipping</h4>
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <select class="nice-select">
+                                                    <option>Bangladesh</option>
+                                                    <option>China</option> 
+                                                    <option>country</option>
+                                                    <option>India</option>
+                                                    <option>Japan</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <select class="nice-select">
+                                                    <option>Dhaka</option>
+                                                    <option>Barisal</option>
+                                                    <option>Khulna</option>
+                                                    <option>Comilla</option>
+                                                    <option>Chittagong</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <input type="text" placeholder="Postcode / Zip">
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <button class="btn">Estimate</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div> -->
+                                <!-- Discount Coupon -->
+                                <!-- <div class="discount-coupon">
+                                    <h4>Discount Coupon Code</h4>
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <input type="text" placeholder="Coupon Code">
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <button class="btn">Apply Code</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div> -->
+                            <div class="row">
+                              <div class="col-lg-6 col-12 mb-30 d-flex">
+                                                      <ul class="list-unstyled">
+                                                        <li class="text-muted">To: <span style="color:black ;"><bold>{{addresss.name}}</bold></span></li>
+                                                        <li class="text-muted"  >{{addresss.email}}</li>
+                                                        <li class="text-muted">{{addresss.town}}</li>
+                                                        <li class="text-muted">{{addresss.state}}</li>
+                                                        <li class="text-muted">{{addresss.country}}</li>
+                                                        <li class="text-muted"><i class="fas fa-phone"></i>{{addresss.phone}}</li>
+                                                      </ul>
+                                                    </div>
+                                
+                              
+
+                              <!-- Cart Summary -->
+                              <div class="col-lg-6 col-12 mb-30 d-flex">
+                                <div class="cart-summary">
+                                    <div class="cart-summary-wrap">
+                                        <h4> Summary</h4>
+                                        <p>Sub Total <span>₹00.00</span></p>
+                                        <p>Shipping Cost <span>₹00.00</span></p>
+                                        <h2>Grand Total <span>₹{{total}}</span></h2>
+                                        <div class="cart-summary-button">
+                                          <a href="{% url 'cod' %}" class="w-100"> <button class="btn w-100">COD</button></a>
+                                          <a href="{% url 'paypal' %}" class="w-100"><button class="btn w-100">Paypal </button></a>
+                                          <a href="{% url 'razopay' %}" class="w-100"><button class="btn w-100">razopay </button></a>
+                            
+<!-- ///////////////////////////////////////////////////////////paypal////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                                          <div id="smart-button-container">
+                                            <div style="text-align: center;">
+                                              <div id="paypal-button-container"></div>
+                                            </div>
+                                          </div>
+                                          <div id="smart-button-container">
+                                            <div style="text-align: center;">
+                                              <div id="paypal-button-container"></div>
+                                            </div>
+                                          </div>
+                                        <script src="https://www.paypal.com/sdk/js?client-id=AQHCZAUm3yenrZz_WDoxjq3Gh9PPp7ypoIVcC7TOAPl7dzswgfpcgm6QcvzTcugbe-DLQifjuZPbFZpt&enable-funding=venmo&currency=USD" data-sdk-integration-source="button-factory"></script>
+                                        <script>
+                                            var a={{total}}
+                                          function initPayPalButton() {
+                                            paypal.Buttons({
+                                              style: {
+                                                shape: 'rect',
+                                                color: 'gold',
+                                                layout: 'vertical',
+                                                label: 'paypal',
+                                                
+                                              },
+                                        
+                                              createOrder: function(data, actions) {
+                                                return actions.order.create({
+                                                  purchase_units: [{"amount":{"currency_code":"USD","value":a}}]
+                                                });
+                                              },
+                                        
+                                              onApprove: function(data, actions) {
+                                                return actions.order.capture().then(function(orderData) {
+                                                  
+                                                  // Full available details
+                                                  console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                                        
+                                                  // Show a success message within this page, e.g.
+                                                  const element = document.getElementById('paypal-button-container');
+                                                  element.innerHTML = '';
+                                                  element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                                        
+                                                  // Or go to another URL:  actions.redirect('thank_you.html');
+                                                  
+                                                });
+                                              },
+                                        
+                                              onError: function(err) {
+                                                console.log(err);
+                                              }
+                                            }).render('#paypal-button-container');
+                                          }
+                                          initPayPalButton();
+                                        </script>
+  <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////?                              -->
+
+                                      </div>
+                                    </div>
+                                    
+                                    <!-- <div class="col-xl-6">
+                                      <div class="col-12 mb-30">
+                                        <tbody>
+                                          <tr>
+                                         
+                                          <td><a href="{% url 'paypal'  %}"  class="btn">Paypal</a></td> 
+                                          
+                                      </tr>
+                                    </div>
+                                </div> -->
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--Cart section end-->
+        <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////
+         -->
+         
+       {% endblock %}

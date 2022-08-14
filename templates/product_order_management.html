@@ -1,0 +1,86 @@
+{% extends 'admin_base.html' %}
+{% load mathfilters %}
+
+{% load static %}
+
+{% block headerandfooter %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper"> 
+    <!-- Content Header (Page header) -->
+    <div class="content-header sty-one">
+      <h1 class="text-black">Data Tables</h1>
+      <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="sub-bread"><i class="fa fa-angle-right"></i> Tables</li>
+        <li><i class="fa fa-angle-right"></i> Data Tables</li>
+      </ol>
+    </div>
+    
+    <!-- Main content -->
+    <div class="content">
+      <div class="info-box">
+      <h4 class="text-black">Data Export</h4>
+
+      <div class="table-responsive">
+                  <table id="example2" class="table table-bordered table-hover" data-name="cool-table">
+                    <thead>
+                      <tr>
+                        <th>user</th>
+                        <th>product</th>
+                        <th>quantity</th>
+                        <th style="width:19%;">price</th>
+                        <th>total</th>
+            
+                        <th>Date</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for x in  orderproduct %}
+                      <tr>
+                        <td>{{x.user}}</td>
+                        <td>{{x.product}}</td>
+                        <!-- <td>{{x.payment}}</td> -->
+                        <!-- <td>{{x.payment}}</td> -->
+                        <td>{{x.quantity}}</td>
+                        <td>{{x.product_price}}</td>
+                        <td>{{x.product_price|mul:x.quantity|abs}}</td>
+                        
+                        <td> 
+                          <form action="{% url 'product_change_status' x.id %}" method="POST">
+                            {% csrf_token %}
+                          <label>{{x.product_status}}</label>
+                          <select class="nice-select" name="status" value="status">
+                            <option>{{x.product_status}}</option>
+                              
+                            <option>order conformed</option>
+                              <option>shipped</option>
+                              <option>out for delivery</option>
+                              <option>delivered</option>
+                              <option>cancelled</option>
+                              <option>returned</option>
+                              <option>return_accepted</option>
+
+
+                          </select>
+                      </div>
+
+                    </td>
+                    <td>
+                      <button class="btn "> submit</button>
+                    </td>
+                    </form>
+                        </select></td>
+                        <td>{{x.address}}</td>
+                        <td>{{x.date}}</td>
+                      </tr> 
+                    {% endfor %}
+                     </tbody>
+                  </table>
+                  </div>
+      </div>
+      
+</div>
+<!-- ./wrapper --> 
+{% endblock %}

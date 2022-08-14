@@ -1,0 +1,235 @@
+    <!-- Cart Table -->
+{% load mathfilters %}
+
+    {% if not carts_item %}
+    <h1>Nothing here </h1>
+    <h1>  </h1>
+{% else %} 
+    <div class="cart-table table-responsive mb-30">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="pro-thumbnail">Image</th>
+                    <th class="pro-title">Product</th>
+                    <th class="pro-price">Price</th>
+                    <th class="pro-quantity">Quantity</th>
+                    <th class="pro-subtotal">Total</th>
+                    <th class="pro-remove">Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+          
+                {% for x in carts_item %}
+                
+                <tr>
+                    <td class="pro-thumbnail"><a href="#"><img src="{{x.product.img}}" alt="Product"></a></td>
+
+
+
+
+                    <td class="pro-title"><a href="#">{{x.product.name}}</a></td>
+                    <!-- {% if x.product.product_offer %}
+                    <td class="pro-price"><span>₹ {{x.product.product_offer.discount|mul:x.product.price|div:100|sub:x.product.price|abs}}</span></td>
+                    {% else %}
+                    <td class="pro-price"><span>₹{{x.product.price}} </span></td>
+                    {% endif %} -->
+
+                    {% if x.product.product_offer.discount and x.product.cats.cats_offers.discount %}
+                            {% if x.product.product_offer.discount > x.product.cats.cats_offers.discount %}
+                                
+                                <td><p class="pro-price"><strong
+                                     >
+                                     ₹{{x.product.product_offer.discount|mul:x.product.price|div:100|sub:x.product.price|abs}}
+                                </strong> </p></td>
+                            {% else %}
+                        
+                                <td><p class="pro-price"><strong>
+                                ₹{{x.product.cats.cats_offers.discount|mul:x.product.price|div:100|sub:x.product.price|abs}}
+                                </strong> </p></td>
+                            {%endif%}
+                    {% elif x.product.product_offer.discount %}
+                       <td> <p class="pro-price"><strong
+                            >
+                        ₹{{x.product.product_offer.discount|mul:x.product.price|div:100|sub:x.product.price|abs}}
+                        </strong> </p></td>
+
+                    {% elif x.product.cats.cats_offers.discount %}
+                    <td> <p class="pro-price"><strong >
+                        ₹{{x.product.cats.cats_offers.discount|mul:x.product.price|div:100|sub:x.product.price|abs}}
+                         </strong> </p></td>
+
+                    {% else %}
+                    <td> <p class="pro-price"><strong
+                        >
+                        {{x.product.price}}</strong> </p></td>
+                    {% endif %}
+
+
+                    <!-- <td class="pro-price"><span>{{x.product.price}}</span></td> -->
+          
+                    <td class="pro-price">
+                        <a  class="pro-qtys" type="button"
+                        hx-delete="{% url 'cart_item_remove' x.product.id %}"
+                        hx-target="#cat_htmx"
+                        
+                        hx-swap="outerhtml">-</a>
+                       
+                       
+                       
+                        <!-- <a href="{% url 'cart_item_remove' x.product.id %}" class="pro-qtys"><button class="inc qtybtn">-</button></a> -->
+                        <input class="cartqty" type="number" value="{{x.quantity}}">
+                        <!-- <a href="{% url 'add_cart' x.product.id %}" class="pro-qtys"><button class="dec qtybtn">+</button></a> -->
+                       
+                       
+                       
+                       
+                        <a  class="pro-qtys" type="button"
+                        hx-delete="{% url 'adds_cart' x.product.id %}"
+                        hx-target="#cat_htmx"
+                      
+                        hx-swap="outerhtml">+</a>
+                    <!-- <a href="{% url 'add_cart' x.product.id %}" class="pro-qty"><input type="number" value="{{x.quantity}}"></a> -->
+<!-- //////////////////////////////////////////// -->
+                </td>
+                    {% if x.product.product_offer.discount and x.product.cats.cats_offers.discount %}
+                        {% if x.product.product_offer.discount > x.product.cats.cats_offers.discount %}
+
+                                         <td><p class="pro-price"><strong>
+                                                        ₹{{x.product.product_offer.discount|mul:x.product.price|div:100|sub:x.product.price|mul:x.quantity|abs}}
+                                            </strong> </p></td>
+                        {% else %}
+
+                                <td><p class="pro-price"><strong>
+                                ₹{{x.product.cats.cats_offers.discount|mul:x.product.price|div:100|sub:x.product.price|mul:x.quantity|abs}}
+                                </strong> </p></td>
+                        {%endif%}
+                    {% elif x.product.product_offer.discount %}
+                                    <td> <p class="pro-price"><strong>₹{{x.product.product_offer.discount|mul:x.product.price|div:100|sub:x.product.price|mul:x.quantity|abs}}</strong> </p></td>
+
+                    {% elif x.product.cats.cats_offers.discount %}
+                                <td> <p class="pro-price"><strong>₹{{x.product.cats.cats_offers.discount|mul:x.product.price|div:100|sub:x.product.price|mul:x.quantity|abs}}</strong> </p></td>
+
+                    {% else %}
+                    <td> <p class="pro-price"><strong>₹{{x.product.price|mul:x.quantity|abs}}</strong> </p></td>
+                    {% endif %}
+
+
+
+                    <td> <a  class="pro-remove"  onclick="return confirm('Do you want to remove {{x.product.name}}')"><i class="fa fa-trash-o"  type="button"
+                    hx-delete="{% url 'delete_cart' x.product.id %}"
+                    hx-target="#cat_htmx"
+                  
+                    hx-swap="outerhtml"></a></td>
+
+
+
+                    <!-- <td class="pro-remove"><a href="{% url 'delete_cart' x.product.id %}" onclick="return confirm('Do you want to remove {{x.product.name}}')"><i class="fa fa-trash-o"></i></a></td> -->
+                        
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+    <div class="row">
+
+        <div class="col-lg-6 col-12 mb-5">
+            <!-- Calculate Shipping -->
+            <!-- <div class="calculate-shipping">
+                <h4>Calculate Shipping</h4>
+                <form action="#">
+                    <div class="row">
+                        <div class="col-md-6 col-12 mb-25">
+                            <select class="nice-select">
+                                <option>Bangladesh</option>
+                                <option>China</option> 
+                                <option>country</option>
+                                <option>India</option>
+                                <option>Japan</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-12 mb-25">
+                            <select class="nice-select">
+                                <option>Dhaka</option>
+                                <option>Barisal</option>
+                                <option>Khulna</option>
+                                <option>Comilla</option>
+                                <option>Chittagong</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-12 mb-25">
+                            <input type="text" placeholder="Postcode / Zip">
+                        </div>
+                        <div class="col-md-6 col-12 mb-25">
+                            <button class="btn">Estimate</button>
+                        </div>
+                    </div>
+                </form>
+            </div> -->
+            <!-- Discount Coupon -->
+            {% if cart_itemcount > 0 %}
+            
+            <div class="discount-coupon">
+                {% if request.user.is_authenticated %}
+                <h4>Discount Coupon Code</h4>
+
+                <form action="{% url 'apply_coupon' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 col-12 mb-25">
+                
+
+                            <input type="text" value="coupon_code" name="coupon_code" placeholder="Coupon Code">
+                        </div>
+                        <div class="col-md-6 col-12 mb-25">
+                            <button type="submit" class="btn">Apply Code</button>
+                            {% if messages %}
+                                {% for message in messages %}
+                                   <p style="color:red;">{{message}}</p> 
+                                {% endfor %}
+                    
+                                {% endif %}
+                            
+            {% endif %}
+                            
+            
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="col-lg-6 col-12 mb-30 d-flex">
+            <div class="cart-summary">
+                <div class="cart-summary-wrap">
+                    <h4>Cart Summary</h4>
+                    <!-- <p>Sub Total <span>₹00.00</span></p> -->
+                    <p>Shipping Cost <span>Free shipping</span></p>
+                    <p>total <span>₹{{total}}</span></p>
+                    {% if reduction > 0 %}
+                    <h2>Grand Total <span>₹{{new_total}}</span></h2>
+                    <p style="color:blue;">Coupon applied</p>
+                    {% else %}
+                    <h2>Grand Total <span>₹{{total}}</span></h2>
+                    {%endif%}
+                </div>
+                <div class="cart-summary-button">
+                {% if cart_itemcount > 0 %}
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'checkout' %}"> <button class="btn">Checkout</button></a>
+                    {% else %}
+                        <a href="{% url 'login-register' %}"> <button class="btn">Checkout</button></a>
+                    {% endif %} 
+
+                {% else %}
+                     <button class="btn">Checkout</button>
+                     {%endif%}
+                     {% endif %}
+                    <!-- <button class="btn">Update Cart</button> -->
+                </div>
+            </div>
+        </div>
+
+    </div>

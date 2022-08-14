@@ -1,0 +1,56 @@
+{% extends 'admin_base.html' %}
+
+{% load static %}
+
+{% block headerandfooter %}
+
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header sty-one">
+        <h1 class="text-black">Data Tables</h1>
+        <ol class="breadcrumb">
+          <li><a href="#">Home</a></li>
+          <li class="sub-bread"><i class="fa fa-angle-right"></i> Tables</li>
+          <li><i class="fa fa-angle-right"></i> Data Tables</li>
+        </ol>
+      </div>
+
+      <!-- Main content -->
+      <div class="content">
+        <div class="info-box">
+          <div class="table-responsive">
+            <!-- <button href=""></button> -->
+            <a href='add_categories' class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Add New</a>
+            <table id="example2" class="table table-bordered table-hover" data-name="cool-table">
+              <thead>
+                <tr>
+                  <th>categories #</th>
+                  <th>des</th>
+                  <th>stock</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                {% for x in values %}
+                <tr>
+                  <td>{{x.category_name}}</td>
+                  <td>{{x.des}}</td>
+                  <td>{{x.stock}}</td>
+                  
+                  <!-- <td><a href="delete_products/{{x.id}}" class="btn btn-secondary btn-lg active " role="button" aria-pressed="true">delete</a</td> -->
+                  <!-- <td><a href="update_products/{{x.id}}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">update</a</td> -->
+                  <td><a href="delete_categories/{{x.id}}" class="btn btn-secondary btn-lg active " role="button" aria-pressed="true">delete</a</td>
+                  <td><a href="update_categories/{{x.id}}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">update</a</td>
+                      
+                </tr>
+                {% endfor %}
+              </tbody>
+          </div>
+        </div>
+      </div>
+
+    
+    {% endblock %}

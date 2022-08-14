@@ -1,0 +1,85 @@
+{% extends 'admin_base.html' %}
+
+{% load static %}
+
+{% block headerandfooter %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper"> 
+    <!-- Content Header (Page header) -->
+    <div class="content-header sty-one">
+      <h1 class="text-black">Data Tables</h1>
+      <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="sub-bread"><i class="fa fa-angle-right"></i> Tables</li>
+        <li><i class="fa fa-angle-right"></i> Data Tables</li>
+      </ol>
+    </div>
+    
+    <!-- Main content -->
+    <div class="content">
+      <div class="info-box">
+      <h4 class="text-black">Data Export</h4>
+
+      <div class="table-responsive">
+                  <table id="example2" class="table table-bordered table-hover" data-name="cool-table">
+                    <thead>
+                      <tr>
+                        <th>ID #</th>
+                        <th>User</th>
+                        <th>Amount</th>
+                        <!-- <th style="width:19%;">status</th> -->
+                        <th>address</th>
+            
+                        <th>payment</th>
+                        <th>Date</th>
+
+                        <th>Data</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for x in  orders %}
+                      <tr>
+                        <td>{{x.order_id}}</td>
+                        <td>{{x.user}}</td>
+                        <!-- <td>{{x.payment}}</td> -->
+                        <td>{{x.total}}</td>
+                        <td>{{x.address.name}},{{x.address.phone}},{{x.address.address_details}}</td>
+                        <td>{{x.payment.payment_method}}</td>
+                        
+                        
+                        <!-- <td>  -->
+                          <!-- <form action="{% url 'change_status' x.id %}" method="POST"> -->
+                            <!-- {% csrf_token %} -->
+                          <!-- <label>{{x.status}}</label> -->
+                          <!-- <select class="nice-select" name="status" value="status">
+                            <option>{{x.status}}</option>
+                            <option>order conformed</option>
+                              <option>shipped</option>
+                              <option>out for delivery</option>
+                              <option>delivered</option>
+                              <option>cancelled</option>
+                              <option>returned</option> -->
+                          <!-- </select> -->
+                      <!-- </div> -->
+
+                    <!-- </td>
+                    <td>
+                      <button class="btn "> submit</button>
+                    </td> -->
+                    </form>
+                        </select></td>
+                        <td>{{x.date}}</td>
+                        <td> <a href="{% url 'product_order_management' x.id %}">Details</a>
+                        </td>
+                        
+                      </tr> 
+                    {% endfor %}
+                     </tbody>
+                  </table>
+                  </div>
+      </div>
+      
+</div>
+<!-- ./wrapper --> 
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'admin_base.html' %}
+
+{% load static %}
+
+{% block headerandfooter %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header sty-one">
+        <h1 class="text-black">Data Tables</h1>
+        <ol class="breadcrumb">
+          <li><a href="#">Home</a></li>
+          <li class="sub-bread"><i class="fa fa-angle-right"></i> Tables</li>
+          <li><i class="fa fa-angle-right"></i> Data Tables</li>
+        </ol>
+      </div>
+
+      <!-- Main content -->
+      <div class="content">
+        <div class="info-box">
+          <div class="table-responsive">
+            <table id="example2" class="table table-bordered table-hover" data-name="cool-table">
+              <thead>
+                <tr>
+                  <th>ID #</th>
+                  <th>Username</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for x in values %}
+                <tr>
+                  <td>{{x.id}}</td>
+                  <td>{{x.username}}</td>
+                  <td>{{x.name}}</td>
+                  <td>{{x.email}}</td>
+
+                  
+                  {% if x.is_active %}
+                    <td><a href="block_user/{{x.id}}" class="btn btn-secondary btn-lg active " role="button" aria-pressed="true">BlockUser</a</td>
+                  {% else %}
+                    <td><a href="block_user/{{x.id}}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">UnblockUser</a</td>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.content-wrapper -->
+   
+
+    <!-- ./wrapper -->
+
+    {% endblock %}

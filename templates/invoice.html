@@ -1,0 +1,263 @@
+{% extends 'user_header_footer.html' %}
+{% load mathfilters %}
+
+{% load static %}
+
+{% block headerandfooter %}
+
+
+
+
+        <!-- Page Banner Section Start -->
+        <div class="page-banner-section section bg-image" data-bg="assets/images/bg/breadcrumb.png">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+
+                        <div class="page-banner text-left">
+                            <h2>order summary</h2>
+                            <ul class="page-breadcrumb">
+                                <li><a href="{% url 'index_page' %}">Home</a></li>
+                                <li>order</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page Banner Section End -->
+        <!--Cart section start-->
+        <div class="cart-section section pt-90 pt-lg-70 pt-md-60 pt-sm-50 pt-xs-45  pb-70 pb-lg-50 pb-md-40 pb-sm-30 pb-xs-20">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12">
+                        <!-- Cart Table -->
+                    {% if not carts_item %}
+                        <h1>nothing here </h1>
+                        <h1>  </h1>
+                    {% else %} 
+                        <div class="cart-table table-responsive mb-30">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="pro-thumbnail">Image</th>
+                                        <th class="pro-title">Product</th>
+                                        <th class="pro-price">Price</th>
+                                        <th class="pro-quantity">Quantity</th>
+                                        <th class="pro-subtotal">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                              
+                                    {% for x in carts_item %}
+                                    
+                                    <tr>
+                                        <td class="pro-thumbnail"><a href="#"><img src="{{x.product.img}}" alt="Product"></a></td>
+                                        <td class="pro-title"><a href="#">{{x.product.name}}</a></td>
+                                        {% if x.product.product_offer.discount and x.product.cats.cats_offers.discount %}
+                                        {% if x.product.product_offer.discount > x.product.cats.cats_offers.discount %}
+                                            
+                                            <td><p class="pro-price"><strong
+                                                 >
+                                                 ₹{{x.product.product_offer.discount|mul:x.product.price|div:100|sub:x.product.price|abs}}
+                                            </strong> </p></td>
+                                        {% else %}
+                                    
+                                            <td><p class="pro-price"><strong>
+                                            ₹{{x.product.cats.cats_offers.discount|mul:x.product.price|div:100|sub:x.product.price|abs}}
+                                            </strong> </p></td>
+                                        {%endif%}
+                                {% elif x.product.product_offer.discount %}
+                                   <td> <p class="pro-price"><strong
+                                        >
+                                    ₹{{x.product.product_offer.discount|mul:x.product.price|div:100|sub:x.product.price|abs}}
+                                    </strong> </p></td>
+            
+                                {% elif x.product.cats.cats_offers.discount %}
+                                <td> <p class="pro-price"><strong >
+                                    ₹{{x.product.cats.cats_offers.discount|mul:x.product.price|div:100|sub:x.product.price|abs}}
+                                     </strong> </p></td>
+            
+                                {% else %}
+                                <td> <p class="pro-price"><strong
+                                    >
+                                    {{x.product.price}}</strong> </p></td>
+                                {% endif %}
+
+                                <td class="pro-price"><span>{{x.quantity}}</span></td>
+                                {% if x.product.product_offer.discount and x.product.cats.cats_offers.discount %}
+                                {% if x.product.product_offer.discount > x.product.cats.cats_offers.discount %}
+        
+                                                 <td><p class="pro-price"><strong>
+                                                                ₹{{x.product.product_offer.discount|mul:x.product.price|div:100|sub:x.product.price|mul:x.quantity|abs}}
+                                                    </strong> </p></td>
+                                {% else %}
+        
+                                        <td><p class="pro-price"><strong>
+                                        ₹{{x.product.cats.cats_offers.discount|mul:x.product.price|div:100|sub:x.product.price|mul:x.quantity|abs}}
+                                        </strong> </p></td>
+                                {%endif%}
+                            {% elif x.product.product_offer.discount %}
+                                            <td> <p class="pro-price"><strong>₹{{x.product.product_offer.discount|mul:x.product.price|div:100|sub:x.product.price|mul:x.quantity|abs}}</strong> </p></td>
+        
+                            {% elif x.product.cats.cats_offers.discount %}
+                                        <td> <p class="pro-price"><strong>₹{{x.product.cats.cats_offers.discount|mul:x.product.price|div:100|sub:x.product.price|mul:x.quantity|abs}}</strong> </p></td>
+        
+                            {% else %}
+                            <td> <p class="pro-price"><strong>₹{{x.product.price|mul:x.quantity|abs}}</strong> </p></td>
+                            {% endif %}
+        
+        
+
+
+
+                                   
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                        <div class="row">
+
+                            <div class="col-lg-12 col-12 mb-5">
+                                <!-- Calculate Shipping -->
+                                <!-- <div class="calculate-shipping">
+                                    <h4>Calculate Shipping</h4>
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <select class="nice-select">
+                                                    <option>Bangladesh</option>
+                                                    <option>China</option> 
+                                                    <option>country</option>
+                                                    <option>India</option>
+                                                    <option>Japan</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <select class="nice-select">
+                                                    <option>Dhaka</option>
+                                                    <option>Barisal</option>
+                                                    <option>Khulna</option>
+                                                    <option>Comilla</option>
+                                                    <option>Chittagong</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <input type="text" placeholder="Postcode / Zip">
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <button class="btn">Estimate</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div> -->
+                                <!-- Discount Coupon -->
+                                <!-- <div class="discount-coupon">
+                                    <h4>Discount Coupon Code</h4>
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <input type="text" placeholder="Coupon Code">
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <button class="btn">Apply Code</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div> -->
+                            <div class="row">
+                              <div class="col-lg-6 col-12 mb-30 d-flex">
+                                                      <ul class="list-unstyled">
+                                                        <li class="text-muted">To: <span style="color:black ;"><bold>{{addresss.name}}</bold></span></li>
+                                                        <li class="text-muted"  >{{addresss.email}}</li>
+                                                        <li class="text-muted">{{addresss.town}}</li>
+                                                        <li class="text-muted">{{addresss.state}}</li>
+                                                          <li class="text-muted">{{addresss.country}}</li>
+                                                        <li class="text-muted"><i class="fas fa-phone"></i>{{addresss.phone}}</li>
+                                                      </ul>
+                                                    </div>
+                                
+                              
+
+                              <!-- Cart Summary -->
+                              <div class="col-lg-6 col-12 mb-30 d-flex">
+                                <div class="cart-summary">
+                                    <div class="cart-summary-wrap">
+                                        <h4> Summary</h4>
+                                        <!-- <p>Sub Total <span>₹00.00</span></p> -->
+                                        <p>Shipping Cost <span> Free Shipping</span></p>
+                                        <p>total <span>₹{{total}}</span></p>
+                                        {% if reduction > 0 %}
+                                        <h2>Grand Total <span>₹{{new_total}}</span></h2>
+                                        <p style="color:blue;">Coupon applied</p>
+                                        {% else %}
+                                        <h2>Grand Total <span>₹{{total}}</span></h2>
+                                        {%endif%}
+                                        <div class="cart-summary-button">
+                                          <a href="{% url 'cod' %}" class="w-100"> <button class="btn w-100">COD</button></a>
+                                          <a href="{% url 'paypal' %}" class="w-100"><button class="btn w-100">Paypal </button></a>
+                                          <button id="rzp-button1"  class="btn w-100">razopay real</button>
+                                          
+                                          <!-- <button id="rzp-button1">Pay</button> -->
+<!-- ///////////////////////////////////////////////////////////paypal////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                                          
+  <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////?                              -->
+
+                                      </div>
+                                    </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--Cart section end-->
+        <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+         -->
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+         <script>
+          var options = {
+              "key": "rzp_test_VnQZ2Ga4fHBfxq", // Enter the Key ID generated from the Dashboard
+              "amount": "{{payments.amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+              "currency": "INR",
+              "name": "woodniture ",
+              "description": "purcahses",
+              "image": "https://example.com/your_logo",
+              "order_id": "{{payments.id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 2
+              "handler": function (response){
+                console.log("sucess"),
+                window.location.href = 'http://127.0.0.1:8000/order/success/?razorpay_payment_id = ${response.razorpay_payment_id} = & razorpay_order_id= ${response.razorpay_order_id} & razorpay_signature = ${response.razorpay_signature}'
+                  // alert(response.razorpay_payment_id);
+                  // alert(response.razorpay_order_id);
+                  // alert(response.razorpay_signature)
+              },
+              
+              "theme": {
+                  "color": "#3399cc"
+              }
+          };
+          var rzp1 = new Razorpay(options);
+          rzp1.on('payment.failed', function (response){
+                  alert(response.error.code);
+                  alert(response.error.description);
+                  alert(response.error.source);
+                  alert(response.error.step);
+                  alert(response.error.reason);
+                  alert(response.error.metadata.order_id);
+                  alert(response.error.metadata.payment_id);
+          });
+          document.getElementById('rzp-button1').onclick = function(e){
+              rzp1.open();
+              e.preventDefault();
+          }
+          </script>
+       {% endblock %}

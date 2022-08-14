@@ -1,0 +1,162 @@
+{% extends 'user_header_footer.html' %}
+{% load mathfilters %}
+{% load static %}
+
+{% block headerandfooter %}
+
+<style>
+    
+.cart-table td.pro-quantity .pro-qtys .qtybtn {
+  height: 42px;
+  padding: 0 10px;
+  border: none;
+  background-color: transparent;
+}
+
+.cartqty {
+  height: 42px;
+  width: 50px;
+  text-align: center;
+  border-width: 0 1px;
+  border-style: solid;
+  border-color: #eeeeee;
+  color: #151515;
+}
+</style>
+
+
+        <!-- Page Banner Section Start -->
+        <div class="page-banner-section section bg-image" data-bg="{% static 'assets/images/bg/breadcrumb.jpg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+
+                        <div class="page-banner text-left">
+                            <h2>Shopping Cart</h2>
+                            <ul class="page-breadcrumb">
+                                <li><a href="index.html">Home</a></li>
+                                <li>Shopping Cart</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page Banner Section End -->
+        <!--Cart section start-->
+        <div class="cart-section section pt-90 pt-lg-70 pt-md-60 pt-sm-50 pt-xs-45  pb-70 pb-lg-50 pb-md-40 pb-sm-30 pb-xs-20">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12">
+                        <!-- Cart Table -->
+                   
+                        <div class="cart-table table-responsive mb-30">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="pro-thumbnail">Image</th>
+                                        
+                                        <th class="pro-title">Product</th>
+                                        <th class="pro-quantity">Price</th>
+                                        
+                                        <th class="pro-price">Quantity</th>
+                                        <th class="pro-subtotal">Total</th>
+                                        <th class="pro-remove">Status</th>
+                                        <th class="pro-remove">Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                              
+                                    {% for x in order_products %}
+                                    
+                                    <tr>
+                                        <td class="pro-thumbnail"><a href="#"><img src="{{x.product.img}}" alt="Product"></a></td>
+                                        <td class="pro-title"><a href="#">{{x.product.name}}</a></td>
+                                                                  
+                                        <td class="pro-price"><span>₹{{x.product_price}} </span></td>
+                                        <td class="pro-price"><span> {{x.quantity}} </span></td>
+                                      
+                                        <td class="pro-price"><span>₹{{x.product_price|mul:x.quantity|abs}} </span></td>
+                                        <td class="pro-price"><span>{{x.product_status}} </span></td>
+                                        {% if x.product_status == "delivered" %}
+                                        <td><a href="{% url 'product_return' x.id %}"  class="btn">return</a></td> 
+                                       {% endif %}
+                                        {% if x.product_status == "cancelled" %}
+                                       <td>{{x.product_status}}</td>
+                                       {% endif %}
+
+                                        {% if x.product_status == "returned" %}
+                                       <td>{{x.product_status}}</td> 
+                                       {% endif %}
+                                       {% if x.product_status == "order conformed"  %}
+                            
+                                        <td><a href="{% url 'product_order_cancel' x.id %}"  class="btn">tap to cancel</a></td> 
+                                       {% endif %}
+                                       {% if x.product_status == "shipped" %}
+                                       <td><a href="{% url 'product_order_cancel' x.id %}"  class="btn">tap to cancel</a></td> 
+                                       {% endif %}
+                                       {% if x.product_status == "out for delivery" %}
+                                       <td><a href="{% url 'product_order_cancel' x.id %}"  class="btn">tap to cancel</a></td> 
+
+                                       {% endif %}
+                                      {% endfor %}
+                                    </tr>
+         
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- <div class="row"> -->
+
+                            <!-- <div class="col-lg-6 col-12 mb-5"> -->
+                                <!-- Calculate Shipping -->
+                                <!-- <div class="calculate-shipping">
+                                    <h4>Calculate Shipping</h4>
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <select class="nice-select">
+                                                    <option>Bangladesh</option>
+                                                    <option>China</option> 
+                                                    <option>country</option>
+                                                    <option>India</option>
+                                                    <option>Japan</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <select class="nice-select">
+                                                    <option>Dhaka</option>
+                                                    <option>Barisal</option>
+                                                    <option>Khulna</option>
+                                                    <option>Comilla</option>
+                                                    <option>Chittagong</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <input type="text" placeholder="Postcode / Zip">
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <button class="btn">Estimate</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div> -->
+                                <!-- Discount Coupon -->
+                               
+                            <!-- </div> -->
+
+                            <!-- Cart Summary -->
+                            
+
+                        <!-- </div> -->
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--Cart section end-->
+       {% endblock %}

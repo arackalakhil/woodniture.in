@@ -1,0 +1,278 @@
+{% extends 'user_header_footer.html' %}
+{% load mathfilters %}
+{% load static %}
+{% block headerandfooter %}
+        <!-- Page Banner Section Start -->
+        <div class="page-banner-section section bg-image" data-bg="assets/images/bg/breadcrumb.png">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+
+                        <div class="page-banner text-left">
+                            <h2>Thanks</h2>
+                            <ul class="page-breadcrumb">
+                                <li><a href=""></a></li>
+                                <li>Your Bill</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page Banner Section End -->
+        <!--Cart section start-->
+        <div class="cart-section section pt-90 pt-lg-70 pt-md-60 pt-sm-50 pt-xs-45  pb-70 pb-lg-50 pb-md-40 pb-sm-30 pb-xs-20">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12">
+                        <!-- Cart Table -->
+                    
+                        <div class="cart-table table-responsive mb-30">
+                            <table class="table">
+                               
+                                <tbody>
+                              
+                        
+                                    
+                                    <tr>
+                                        <div class="card">
+                                            <div class="card-body">
+                                              <div class="container mb-5 mt-3">
+                                                <div class="row d-flex align-items-baseline">
+                                                  <div class="col-xl-9">
+                                                    <p style="color: #7e8d9f;font-size: 20px;">Thank you for shopping with us! <strong></strong></p>
+                                                  </div>
+                                                  <div class="col-xl-3 float-end">
+                                                    <!-- <a class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark"><i
+                                                        class="fas fa-print text-primary"></i> Print</a> -->
+                                                    <!-- <a class="btn btn-light text-capitalize" data-mdb-ripple-color="dark"><i
+                                                        class="far fa-file-pdf text-danger"></i> Export</a> -->
+                                                  </div>
+                                                  <hr>
+                                                </div>
+                                                 <div class="container">
+                                                  <div class="col-md-12">
+                                                    <div class="text-center">
+                                                      <i class="fab fa-mdb fa-4x ms-0" style="color:#5d9fc5 ;"></i>
+                                                      <p class="pt-0" >{{ordered_products.user}}</p>
+                                                    </div>
+                                          
+                                                  </div>
+                                          
+                                          
+                                                  <div class="row">
+                                                    <div class="col-xl-8">
+                                                      <ul class="list-unstyled">
+                                                        <li class="text-muted">To: <span style="color:#5d9fc5 ;">{{addresss.name}}</span></li>
+                                                        <li class="text-muted"  >{{addresss.email}}</li>
+                                                        <li class="text-muted">{{addresss.town}}</li>
+                                                        <li class="text-muted">{{addresss.state}}</li>
+                                                        <li class="text-muted">{{addresss.country}}</li>
+                                                        <li class="text-muted"><i class="fas fa-phone"></i>{{addresss.phone}}</li>
+                                                      </ul>
+                                                    </div>
+                                                    <div class="col-xl-4">
+                                                      <p class="text-muted">Invoice</p>
+                                                      <ul class="list-unstyled">
+                                                        <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                                                            class="fw-bold">ID:{{orderID}}</span></li>
+                                                        <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                                                            class="fw-bold">Creation Date: </span>{{dates}}</li>
+                                                        <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                                                            class="me-1 fw-bold">status:</span><span class="badge bg-warning text-black fw-bold">
+                                                              {{payments.payment_method}}</span></li>
+                                                      </ul>
+                                                    </div>
+                                                  </div>
+                                          
+                                                  <div class="row my-2 mx-1 justify-content-center">
+                                                    <table class="table table-striped table-borderless">
+                                                      <thead style="background-color:#84B0CA ;" class="text-white"> 
+                                                        <tr>
+                                                          <th scope="col">product name</th>
+                                                          <th scope="col">Unit Price</th>
+                                                          <th scope="col">Qty</th>
+
+                                                          <th scope="col">Total Price</th>
+                                                        </tr>
+                                                      </thead>
+                                                     
+                                                      {% for x in ordered_products %}
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>{{x.product.name}}</td>
+                                                          {% if x.product.product_offer.discount and x.product.cats.cats_offers.discount %}
+                                                          {% if x.product.product_offer.discount > x.product.cats.cats_offers.discount %}
+                                                              
+                                                              <td><p class="pro-price"><strong
+                                                                   >
+                                                                   ₹{{x.product.product_offer.discount|mul:x.product.price|div:100|sub:x.product.price|abs}}
+                                                              </strong> </p></td>
+                                                          {% else %}
+                                                      
+                                                              <td><p class="pro-price"><strong>
+                                                              ₹{{x.product.cats.cats_offers.discount|mul:x.product.price|div:100|sub:x.product.price|abs}}
+                                                              </strong> </p></td>
+                                                          {%endif%}
+                                                  {% elif x.product.product_offer.discount %}
+                                                     <td> <p class="pro-price"><strong
+                                                          >
+                                                      ₹{{x.product.product_offer.discount|mul:x.product.price|div:100|sub:x.product.price|abs}}
+                                                      </strong> </p></td>
+                              
+                                                  {% elif x.product.cats.cats_offers.discount %}
+                                                  <td> <p class="pro-price"><strong >
+                                                      ₹{{x.product.cats.cats_offers.discount|mul:x.product.price|div:100|sub:x.product.price|abs}}
+                                                       </strong> </p></td>
+                              
+                                                  {% else %}
+                                                  <td> <p class="pro-price"><strong
+                                                      >
+                                                      {{x.product.price}}</strong> </p></td>
+                                                  {% endif %}
+                                  
+
+
+
+                                                      <td>{{x.quantity}}</td>
+
+
+
+
+
+                                                      {% if x.product.product_offer.discount and x.product.cats.cats_offers.discount %}
+                                                      {% if x.product.product_offer.discount > x.product.cats.cats_offers.discount %}
+                              
+                                                                       <td><p class="pro-price"><strong>
+                                                                                      ₹{{x.product.product_offer.discount|mul:x.product.price|div:100|sub:x.product.price|mul:x.quantity|abs}}
+                                                                          </strong> </p></td>
+                                                      {% else %}
+                              
+                                                              <td><p class="pro-price"><strong>
+                                                              ₹{{x.product.cats.cats_offers.discount|mul:x.product.price|div:100|sub:x.product.price|mul:x.quantity|abs}}
+                                                              </strong> </p></td>
+                                                      {%endif%}
+                                                  {% elif x.product.product_offer.discount %}
+                                                                  <td> <p class="pro-price"><strong>₹{{x.product.product_offer.discount|mul:x.product.price|div:100|sub:x.product.price|mul:x.quantity|abs}}</strong> </p></td>
+                              
+                                                  {% elif x.product.cats.cats_offers.discount %}
+                                                              <td> <p class="pro-price"><strong>₹{{x.product.cats.cats_offers.discount|mul:x.product.price|div:100|sub:x.product.price|mul:x.quantity|abs}}</strong> </p></td>
+                              
+                                                  {% else %}
+                                                  <td> <p class="pro-price"><strong>₹{{x.product.price|mul:x.quantity|abs}}</strong> </p></td>
+                                                  {% endif %}
+
+                                                        </tr>
+                                                        {% endfor %}
+                                                      </tbody>
+                                                     
+                                                    </table> 
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-xl-8">
+                                                      <p class="ms-3"></p>
+                                                    </div>
+                                                    <div class="col-xl-3">
+                                                      <ul class="list-unstyled">
+                                                        <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>₹ 000</li>
+                                                        <!-- <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Discount</span>{{reduction}}%</li> -->
+                                                      </ul>
+                                                      <p class="text-black float-start"><span class="text-black me-3"> Total Amount</span><span
+                                                          style="font-size: 25px;">₹ {{new_total}}</span></p>
+                                                    </div>
+                                                  </div>
+                                                  <hr>
+                                                  <div class="row">
+                                                    <div class="col-xl-6">
+                                                      <p>                       </p>
+                                                    </div>
+                                                    <!-- payment-method-start -->
+                                                    <!-- <div class="col-xl-6">
+                                                        <div class="col-12 mb-30">
+                                                          <tbody>
+                                                            <tr>
+                                                            
+    
+                                                            
+                                                        </tr>
+                                                      </div>
+                                                    </div> -->
+                                                    <!-- Payment Method -->
+                                        
+                                                  </div>
+                                          
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                    </tr>
+                                    
+                                
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-6 col-12 mb-5">
+                                <!-- Calculate Shipping -->
+                                <!-- <div class="calculate-shipping">
+                                    <h4>Calculate Shipping</h4>
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <select class="nice-select">
+                                                    <option>Bangladesh</option>
+                                                    <option>China</option> 
+                                                    <option>country</option>
+                                                    <option>India</option>
+                                                    <option>Japan</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <select class="nice-select">
+                                                    <option>Dhaka</option>
+                                                    <option>Barisal</option>
+                                                    <option>Khulna</option>
+                                                    <option>Comilla</option>
+                                                    <option>Chittagong</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <input type="text" placeholder="Postcode / Zip">
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <button class="btn">Estimate</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div> -->
+                                <!-- Discount Coupon -->
+                                <!-- <div class="discount-coupon">
+                                    <h4>Discount Coupon Code</h4>
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <input type="text" placeholder="Coupon Code">
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-25">
+                                                <button class="btn">Apply Code</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div> -->
+
+                            <!-- Cart Summary -->
+                            
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--Cart section end-->
+       {% endblock %}

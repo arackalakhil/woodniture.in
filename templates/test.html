@@ -1,0 +1,181 @@
+{% extends 'user_header_footer.html' %}
+{% load mathfilters %}
+{% load static %}
+<!-- {% load mathfilters %} -->
+{% block headerandfooter %}
+<!-- Page Banner Section Start -->
+<div class="page-banner-section section bg-image"  data-bg="{% static 'assets/images/bg/breadcrumb.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+
+                <div class="page-banner text-left">
+                    <h2>Shop</h2>
+                    <ul class="page-breadcrumb">
+                        <li><a href="index.html">Home</a></li>
+                        <li>Shop</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Banner Section End -->
+<!-- Shop Section Start -->
+<div class="shop-section section pt-60 pt-lg-40 pt-md-30 pt-sm-20 pt-xs-30  pb-70 pb-lg-50 pb-md-40 pb-sm-20 pb-xs-20">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="shop-area">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Grid & List View Start -->
+                            <div class="shop-topbar-wrapper d-flex justify-content-between align-items-center">
+                                <div class="grid-list-option d-flex">
+                                    <ul class="nav">
+                                        <li>
+                                            <a class="active show" data-toggle="tab" href="#grid"><i
+                                                    class="fa fa-th"></i></a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#list" class=""><i class="fa fa-th-list"></i></a>
+                                        </li>
+                                    </ul>
+                                    <p></p>
+                                </div>
+                                <!--Toolbar Short Area Start-->
+                                <div class="toolbar-short-area d-md-flex align-items-center">
+                                    <div class="toolbar-shorter ">
+                                        <label>Sort By:</label>
+                                        <select class="wide">
+                                            <option data-display="Select">Nothing</option>
+                                            <option value="Relevance">Relevance</option>
+                                            <option value="Name, A to Z">Name, A to Z</option>
+                                            <option value="Name, Z to A">Name, Z to A</option>
+                                            <option value="Price, low to high">Price, low to high</option>
+                                            <option value="Price, high to low">Price, high to low</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--Toolbar Short Area End-->
+                            </div>
+                            <!-- Grid & List View End -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="shop-product">
+                                        <div id="myTabContent-2" class="tab-content">
+                                            <div id="grid" class="tab-pane fade active show">
+                                                <div class="product-grid-view">
+                                                    <div class="row">
+                                                        {% for x in values %}
+
+                                                        <div class="col-lg-4 col-md-6 col-sm-6">
+                                                            <!--  Single Grid product Start -->
+                                                            <div class="single-grid-product mb-40">
+                                                                <div class="product-image">
+                                                                    <div class="product-label">
+                                                                  
+                                                                        
+                                                                        {% if x.product_offer.discount and x.cats.cats_offers.discount  %}
+                                                                            {% if x.product_offer.discount > x.cats.cats_offers.discount  %}
+                                                                                    <span>-{{x.product_offer.discount }}% </span>
+                                                                            {% else %}
+                                                                                    <span>-{{x.cats.cats_offers.discount}}% ttt</span>
+                                                                            {%endif%}
+                                                                        {% elif  x.product_offer.discount %}
+                                                                            <span>-{{x.product_offer.discount }}% </span>
+                                                                                  
+                                                                        {% elif x.cats.cats_offers.discount %}
+                                                                                <span>-{{x.cats.cats_offers.discount}}% </span>
+                                                                         {% endif %}
+
+    
+                                                                </div>
+                                                                    <a href="single_product/{{x.id}}">
+                                                                        <img style="height:300px; object-fit:contain" class=" img-fluid img-thumbnail"
+                                                                            src="{{x.img}}" alt="image of product">
+
+                                                                    </a>
+
+                                                                    <div class="product-action">
+                                                                        <ul>
+                                                                            <li><a href="cart.html"><i
+                                                                                        class="fa fa-cart-plus"></i></a>
+                                                                            </li>
+                                                                            <!-- <li><a href="#quick-view-modal-container"
+                                                                                    data-toggle="modal"
+                                                                                    title="Quick View"><i
+                                                                                        class="fa fa-eye"></i></a></li> -->
+                                                                            <li><a href="wishlit.html"><i
+                                                                                        class="fa fa-heart-o"></i></a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-content">
+                                                                    <h3 class="title"> <a
+                                                                            href="single_product/{{x.id}}">{{x.name}}</a>
+                                                                    </h3>
+                                                                    
+
+                                                                    {% if x.product_offer.discount and x.cats.cats_offers.discount  %}
+                                                                            {% if x.product_offer.discount > x.cats.cats_offers.discount  %}
+                                                                                    <del>price:₹{{x.price}}</span> </p></del>
+                                                                                    <p class="product-price"><span   class="discounted-price">
+                                                                                    offerprice:₹{{x.product_offer.discount|mul:x.price|div:100|sub:x.price|abs}}
+                                                                                        </span> </p>
+                                                                            {% else %}
+                                                                                    <del>price:₹{{x.price}}</span> </p></del>
+                                                                                    <p class="product-price"><span   class="discounted-price">
+                                                                                        offerprice:₹{{x.cats.cats_offers.discount|mul:x.price|div:100|sub:x.price|abs}}
+                                                                                               </span> </p>
+                                                                            {%endif%}
+                                                                    {% elif  x.product_offer.discount %}
+                                                                            <del>price:₹{{x.price}}</span> </p></del>
+                                                                            <p class="product-price"><span   class="discounted-price">
+                                                                            offerprice:₹{{x.product_offer.discount|mul:x.price|div:100|sub:x.price|abs}}
+                                                                                   </span> </p>
+                                                                                  
+                                                                    {% elif x.cats.cats_offers.discount %}
+                                                                            <del>price:₹{{x.price}}</span> </p></del>
+                                                                            <p class="product-price"><span   class="discounted-price">
+                                                                                offerprice:₹{{x.cats.cats_offers.discount|mul:x.price|div:100|sub:x.price|abs}}
+                                                                                </span> </p>
+                                                                   
+                                                                    {% else %}
+                                                                        <p class="product-price"><span
+                                                                        class="discounted-price">price:
+                                                                        {{x.price}}</span> </p>
+                                                                    {% endif %}
+                                                                    <p> {{x.des}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <!--  Single Grid product End -->
+                                                        </div>
+                                                        {% endfor %}
+
+                                                        <div class="row mb-30 mb-sm-40 mb-xs-30">
+                                                            <div class="col">
+                                                                <ul class="page-pagination">
+                                                                    <li class="active"><a href="#">01</a></li>
+                                                                    <li><a href="#">02</a></li>
+                                                                    <li><a href="#">03</a></li>
+                                                                    <li><a href="#">04</a></li>
+                                                                    <li><a href="#">05</a></li>
+                                                                    <li><a href="#">Next</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Shop Section End -->
+                            {% endblock %}

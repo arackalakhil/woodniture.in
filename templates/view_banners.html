@@ -1,0 +1,63 @@
+{% extends 'admin_base.html' %}
+
+{% load static %}
+
+{% block headerandfooter %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper"> 
+    <!-- Content Header (Page header) -->
+    <div class="content-header sty-one">
+      <h1 class="text-black">Banner Table</h1>
+      <ol class="breadcrumb">
+        <li><a href="#">Banner</a></li>
+        <li class="sub-bread"><i class="fa fa-angle-right"></i> Banner table</li>
+        <li><i class="fa fa-angle-right"></i> Data</li>
+      </ol>
+    </div>
+    <a href="adds_banners"  class="btn btn-secondary  active" role="button" aria-pressed="true">Add Banner</a>
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="info-box">
+      <h4 class="text-black">Data Export</h4>
+      <div class="table-responsive">
+                  <table id="example2" class="table table-bordered table-hover" data-name="cool-table">
+                    <thead>
+                      <tr>
+                        <th>ID #</th>
+                        <th>image </th>
+                        <th>title</th>
+                        <!-- <th style="width:19%;">status</th> -->
+                        <th>description</th>
+        
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for x in  banners %}
+                      <tr>
+                        <td>{{x.id}}</td>
+  
+                  <td><img class=" img-fluid img-thumbnail" style = "width: 140px; height: 160px;"src="{{x.img}}" alt="image of product"></td>
+
+                        <!-- <td>{{x.payment}}</td> -->
+                        <td>{{x.title}}</td>
+                        <td>{{x.description}}</td>
+                      
+                      <td class="pro-remove"><a href="delete_banner/{{x.id}}"  onclick="return confirm('Do you want to remove banner no:{{x.id}}')"><i class="fa fa-trash-o"></i></a></td>
+                        <td><a href="update_banner/{{x.id}}" class="btn btn-secondary  active" role="button" aria-pressed="true">update</a</td>
+                            {% if x.is_selected == True %}
+                        <td><a href="block_banner/{{x.id}}" onclick="return confirm('Do you want to Activate  banner no:{{x.id}}')" class="btn btn-secondary  active" role="button" aria-pressed="true">block</a</td>
+                            {% else %}
+                                <td><a href="block_banner/{{x.id}}" onclick="return confirm('Do you want to  Block banner no:{{x.id}}')" class="btn btn-secondary  active" role="button" aria-pressed="true">active</a</td>
+                                    {% endif %}
+                                </tr> 
+                    {% endfor %}
+                     </tbody>
+                  </table>
+                  </div>
+      </div>
+      
+</div>
+<!-- ./wrapper --> 
+{% endblock %}

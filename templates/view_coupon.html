@@ -1,0 +1,61 @@
+{% extends 'admin_base.html' %}
+
+{% load static %}
+
+{% block headerandfooter %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header sty-one">
+        <h1 class="text-black">Coupon</h1>
+        <ol class="breadcrumb">
+          <li><a href="#">Home</a></li>
+          <li class="sub-bread"><i class="fa fa-angle-right"></i> Tables</li>
+          <li><i class="fa fa-angle-right"></i>coupon</li>
+        </ol>
+      </div>
+
+      <!-- Main content -->
+
+      <div class="content">
+        <div class="info-box">
+          <div class="table-responsive">
+            <table id="example2" class="table table-bordered table-hover" data-name="cool-table">
+              <thead>
+                <tr>
+                  <th>code </th>
+                  <th>discount</th>
+                  <th>active/inactive</th>
+                  <th>delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for x in coupons %}
+                <tr>
+                  <td>{{x.coupon_code}}</td>
+                  <!-- <td>{{x.valid_from}}</td> -->
+                  <!-- <td>{{x.valid_to}}</td> -->
+                  <td>{{x.discount_percentage}}</td>
+
+                  {% if x.is_active %}
+                    <td><a href="block_coupon/{{x.id}}" class="btn btn-secondary btn-lg active " role="button" aria-pressed="true">block_offer</a</td>
+                  {% else %}
+                    <td><a href="block_coupon/{{x.id}}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Unblock_offer</a</td>
+                  {% endif %}
+                  <td><a href="delete_coupon/{{x.id}}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">delete</a</td>
+                  <!-- <td><a href="edit_offer/{{x.id}}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">edit</a</td> -->
+                
+                </tr>
+                {% endfor %}
+          </div>
+      <a href="add_coupon" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">add</a</td>
+      </div>
+      </div>
+    </div>
+    <!-- /.content-wrapper -->
+   
+
+    <!-- ./wrapper -->
+
+    {% endblock %}
