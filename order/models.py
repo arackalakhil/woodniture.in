@@ -1,5 +1,5 @@
 from telnetlib import STATUS
-from tkinter import CASCADE
+from django.db.models.deletion import CASCADE
 from django.db import models
 from carts.models import cart_item
 from products.models import products
