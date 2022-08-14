@@ -1,6 +1,6 @@
 from email.headerregistry import Address
 from re import T
-from tkinter import CASCADE
+from django.db.models.deletion import CASCADE
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 from phonenumbers import country_code_for_region
