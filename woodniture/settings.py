@@ -164,8 +164,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# MEDIA_ROOT = BASE_DIR / "product_images"
-# MEDIA_URL = "/media/"
+ MEDIA_ROOT = BASE_DIR / "product_images"
+ MEDIA_URL = "/media/"
 # heroku config:set DISABLE_COLLECTSTATIC=1
 
 
