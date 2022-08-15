@@ -168,7 +168,8 @@ MEDIA_ROOT = BASE_DIR / "product_images"
 MEDIA_URL = "/media/"
 # heroku config:set DISABLE_COLLECTSTATIC=1
 
-
+RAZOR_KEY_ID="rzp_test_P6CeE4vjIrACIy"
+RAZOR_KEY_SECRET="w0gQsAUQgqlIqFF41wUilYgw"
 
 
 
