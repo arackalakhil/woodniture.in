@@ -31,7 +31,7 @@ def table_list(request):
 def single_product(request,id):
     values = products.objects.get(id = id )
     
-    return render (request,'single_Product.html',{"values" : values})
+    return render (request,'single_product.html',{"values" : values})
 
 # def latest_bed(request):
 #     cat=categories.objects.get(category_name="BED")
@@ -51,7 +51,7 @@ def search(request):
         print(searchvalue)
         try:
             values = products.objects.get(name__icontains= searchvalue)
-            return render(request,'single_Product.html',{"values":values})
+            return render(request,'single_product.html',{"values":values})
         except:
             return render(request,'item_not_found.html')
             
