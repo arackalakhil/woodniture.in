@@ -30,7 +30,7 @@ def table_list(request):
 
 def single_product(request,id):
     values = products.objects.get(id = id )
-    return redirect(index_page)
+    
     return render (request,'single_Product.html',{"values" : values})
 
 # def latest_bed(request):
