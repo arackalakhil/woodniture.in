@@ -46,10 +46,10 @@
                                     <ul>
                                         <li><a href="{% url 'index_page' %}">Home</a>
                                         </li>
-                                        <li><a href="">Shop</a>
+                                        <li><a href="{% url 'table_list' %}">Shop</a>
                                             <ul class="mega-menu four-column left-0">
                                                 <li>
-                                                    <a href="" class="item-link">Shop</a>
+                                                    <a href="{% url 'table_list' %}" class="item-link">Shop</a>
                                                     <ul>
                                                         <li><a href="{% url 'table_list' %}">Table </a></li>
                                                         <li><a href="{% url 'bed_list' %}">Bed</a></li>
@@ -127,7 +127,7 @@
                                             </ul>
                                         </li> -->
                                         {% if user.is_authenticated %}
-                                        <li class="menu-item-has-children"><a href="{% url 'login-register' %}">{{user.username}}</a>
+                                        <li class="menu-item-has-children"><a href="{% url 'index_page' %}">{{user.username}}</a>
                                         </li>
                                         {% else %}
                                         <li class="menu-item-has-children"><a href="{% url 'login-register' %}">Login</a>
@@ -285,7 +285,7 @@
                                                     <li>
                                                         <div class="header-cart-icon">
                                                             <a href="{% url 'mycart' %}"><i
-                                                                    class="flaticon-shopping-cart"></i></a>
+                                                                    class="flaticon-shopping-cart"></i> {% if cart_itemcount > 0 %}  {{quantity}} {% else %} 0 {% endif %}</a>
                                                         </div>
                                                     </li>
                                                     <li>
@@ -324,20 +324,22 @@
 
                 <div class="offcanvas-inner-content">
                     <div class="offcanvas-mobile-search-area">
-                        <form action="#">
+                        <form action="{% url 'search' %}" method="POST" >
+                            {% csrf_token %}
+
                             <input type="search" placeholder="Search ...">
                             <button type="submit"><i class="fa fa-search"></i></button>
                         </form>
                     </div>
                     <nav class="offcanvas-navigation">
                         <ul>
-                            <li class="menu-item-has-children"><a href="#">Home</a>
+                            <li class="menu-item-has-children"><a href="{% url 'index_page' %}">Home</a>
                                 <!-- <ul class="submenu2">
                                     <li><a href="{% url 'index_page' %}">Home 01</a></li>
                                     <li><a href="index-2.html">Home 02</a></li>
                                 </ul> -->
                             </li>
-                            <li class="menu-item-has-children"><a href="#">Shopee</a>
+                            <li class="menu-item-has-children"><a href="{% url 'table_list' %}">Shopee</a>
                                 <!--<ul class="submenu2">
                                     <li class="menu-item-has-children"><a href="#">Pages</a>
                                         <ul class="submenu2">
@@ -355,17 +357,17 @@
                                     <li class="menu-item-has-children"><a href="#">Shop Layout</a>
                                         <ul class="submenu2">
                                             <li><a href="">Shop</a></li>
-                                            <li><a href="shop-three-column.html">Shop Three Column</a></li>
-                                            <li><a href="shop-four-column.html">Shop Four Column</a></li>
-                                            <li><a href="shop-right-sidebar.html">Shop Right Sidebar</a></li>
+                                            <li><a href="{% url 'table_list' %}">Table </a></li>
+                                            <li><a href="{% url 'bed_list' %}">Bed</a></li>
+                                            <!-- <li><a href="shop-right-sidebar.html">Shop Right Sidebar</a></li>
                                             <li><a href="shop-list-nosidebar.html">Shop List No Sidebar</a></li>
                                             <li><a href="shop-list-left-sidebar.html">Shop List Left Sidebar</a>
                                             </li>
-                                            <li><a href="shop-list-right-sidebar.html">Shop List Right
-                                                    Sidebar</a></li>
+                                            <li><a href="shop-list-right-sidebar.html">Shop List Right -->
+                                                    <!-- Sidebar</a></li> -->
                                         </ul>
                                     </li>
-                                    <li class="menu-item-has-children"><a href="#">Product Details</a>
+                                    <!-- <li class="menu-item-has-children"><a href="#">Product Details</a>
                                         <ul class="submenu2">
                                             <li><a href="single-product.html">Single Product</a></li>
                                             <li><a href="single-product-variable.html">Variable Product</a></li>
@@ -381,8 +383,8 @@
                                             <li><a href="single-product-gallery-right.html">Product Gallery
                                                     Right</a></li>
                                         </ul>
-                                    </li>
-                                    <li class="menu-item-has-children"><a href="#">Product Details</a>
+                                    </li> -->
+                                    <!-- <li class="menu-item-has-children"><a href="#">Product Details</a>
                                         <ul class="submenu2">
                                             <li><a href="single-product-sticky-left.html">Product Sticky
                                                     Left</a></li>
@@ -390,7 +392,7 @@
                                                     Right</a></li>
                                             <li><a href="single-product-slider-box.html">Product Box Slider</a>
                                             </li>
-                                        </ul> -->
+                                        </ul>  -->
                                     <!-- </li>
 
                                 </ul> -->
@@ -409,10 +411,10 @@
                                 </ul>
                             </li> -->
                             {% if user.is_authenticated %}
-                            <li class="menu-item-has-children"><a href="login-register">hi{{user.username}}</a>
+                            <li class="menu-item-has-children"><a href="{% url 'index_page' %}">hi{{user.username}}</a>
                             </li>
                             {% else %}
-                            <li class="menu-item-has-children"><a href="login-register">Login</a>
+                            <li class="menu-item-has-children"><a href="{% url 'login-register' %}">Login</a>
                             </li>
                             {% endif %}
 
@@ -424,7 +426,9 @@
                             <ul>
                                 <li class="menu-item-has-children"><a href="#">MY ACCOUNT </a>
                                     <ul class="submenu2">
-                                        <li><a href="login-register.html">Login</a></li>
+                                        {% if user.is_authenticated %}
+                                        <li><a href="{% url 'login-register' %}"> hi,<strong> <span>{{user.username}}</span></strong></a></li>
+                                        {% endif %}
                                         <li><a href="{% url 'checkout' %}"> Checkout</a></li>
                                         <li><a href="{% url 'user_profile' %}">My account</a></li>
                                         <li><a href="{% url 'mycart' %}">Cart</a></li>
@@ -688,31 +692,31 @@
                                     <!--Product Details Content Start-->
                                     <div class="product-details-content">
                                         <!--Product Nav Start-->
-                                        <div class="product-nav">
+                                        <!-- <div class="product-nav">
                                             <a href="#"><i class="fa fa-angle-left"></i></a>
                                             <a href="#"><i class="fa fa-angle-right"></i></a>
-                                        </div>
+                                        </div> -->
                                         <!--Product Nav End-->
-                                        <h2>Aliquam lobortis est turpis mauris egestas eget</h2>
-                                        <div class="single-product-reviews">
+                                        <!-- <h2>Aliquam lobortis est turpis mauris egestas eget</h2> -->
+                                        <!-- <div class="single-product-reviews">
                                             <i class="fa fa-star active"></i>
                                             <i class="fa fa-star active"></i>
                                             <i class="fa fa-star active"></i>
                                             <i class="fa fa-star active"></i>
                                             <i class="fa fa-star-o"></i>
                                             <a class="review-link" href="#">(1 customer review)</a>
-                                        </div>
-                                        <div class="single-product-price">
+                                        </div> -->
+                                        <!-- <div class="single-product-price">
                                             <span class="price new-price">$66.00</span>
                                             <span class="regular-price">$77.00</span>
-                                        </div>
-                                        <div class="product-description">
+                                        </div> -->
+                                        <!-- <div class="product-description">
                                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                                                 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
                                                 veniam, quis nostrud exercitation ullamco,Proin lectus ipsum, gravida et
                                                 mattis vulputate, tristique ut lectus</p>
-                                        </div>
-                                        <div class="single-product-quantity">
+                                        </div> -->
+                                        <!-- <div class="single-product-quantity">
                                             <form class="add-quantity" action="#">
                                                 <div class="product-quantity">
                                                     <input value="1" type="number">
@@ -721,8 +725,8 @@
                                                     <button class="btn"><i class="ion-bag"></i>add to cart</button>
                                                 </div>
                                             </form>
-                                        </div>
-                                        <div class="wishlist-compare-btn">
+                                        </div> -->
+                                        <!-- <div class="wishlist-compare-btn">
                                             <a href="#" class="wishlist-btn">Add to Wishlist</a>
                                             <a href="#" class="add-compare">Compare</a>
                                         </div>
@@ -732,7 +736,7 @@
                                                 <a href="#">Accessories</a>,
                                                 <a href="#">Electronics</a>
                                             </span>
-                                        </div>
+                                        </div> -->
                                         <div class="single-product-sharing">
                                             <h3>Share this product</h3>
                                             <ul>
