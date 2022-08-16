@@ -1,18 +1,7 @@
-
-from django.contrib import messages
 from django.shortcuts import redirect, render
-from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.models import User
-from django.views.decorators.cache import cache_control
-import re
-from carts.models import cart, cart_item, productoffer
 from django.core.exceptions import ObjectDoesNotExist
-from carts.views import cart_id
-from order.models import order_product
 from products.models import banner, categories, products
-from users.models import wallet
 
-# Create your views here.
 
 def index_page(request):
 
