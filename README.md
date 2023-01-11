@@ -44,7 +44,9 @@ deployed in AWS using nginx and gunicorn
 ![payment](https://user-images.githubusercontent.com/42874037/211837539-9a950789-58d3-4ad5-a66b-545e1fd43c13.png)
 # bill page
 ![bill](https://user-images.githubusercontent.com/42874037/211837647-bceb1179-e4ee-44b8-89b9-2dee806db09e.png)
+# Admin
+![admin](https://user-images.githubusercontent.com/42874037/211838534-7727537d-d1a9-4552-b63e-fc32eb874932.png)
 
-## Acknowledgments
+
 
 
