@@ -30,7 +30,13 @@ deployed in AWS using nginx and gunicorn
 
 
 
-## License
+## FLOW 
+
+# Login
+![login](https://user-images.githubusercontent.com/42874037/211836597-7d44c843-4ef4-4514-a92f-63f47118a3bb.png)
+
+#landingpage
+![landingpage](https://user-images.githubusercontent.com/42874037/211836831-8051c795-049a-4e92-b587-7f0badb15df6.png)
 
 ## Acknowledgments
 
