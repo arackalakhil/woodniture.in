@@ -46,7 +46,6 @@ deployed in AWS using nginx and gunicorn
 ![bill](https://user-images.githubusercontent.com/42874037/211837647-bceb1179-e4ee-44b8-89b9-2dee806db09e.png)
 # Admin
 ![admin](https://user-images.githubusercontent.com/42874037/211839350-0e90b79e-b464-4f12-aa4e-6ddb0ef66dea.png)
-
-
-
+## Acknowledgments
+more details connect on makhil029@gmail.com
 
