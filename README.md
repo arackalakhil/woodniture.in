@@ -9,7 +9,7 @@ Woodniture was created to understand how an e-commerce website works.
 Main features:
 
 HTML| CSS | Django |Model View Template (MVT)
-• Session based authentication
+• Session based authentication\\
 • Users can create an account, search for products, add them to their cart, and purchase them.
 • The user can pay using cash on delivery, PayPal, or Razorpay.
 • Woodniture also allows guest users.
