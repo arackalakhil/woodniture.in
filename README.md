@@ -38,7 +38,8 @@ deployed in AWS using nginx and gunicorn
 # landingpage
 ![landingpage](https://user-images.githubusercontent.com/42874037/211836831-8051c795-049a-4e92-b587-7f0badb15df6.png)
 # cart
-![cart](https://user-images.githubusercontent.com/42874037/211837413-e8adbbdc-2b87-42a7-9d5e-37a42343e2ee.png)
+![cart](https://user-images.githubusercontent.com/42874037/211838084-c7ac77c7-6a9b-46c9-a8da-e06f466e8345.png)
+
 # payment
 ![payment](https://user-images.githubusercontent.com/42874037/211837539-9a950789-58d3-4ad5-a66b-545e1fd43c13.png)
 # bill page
