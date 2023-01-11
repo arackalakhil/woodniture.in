@@ -46,6 +46,4 @@ deployed in AWS using nginx and gunicorn
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+
